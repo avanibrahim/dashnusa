@@ -57,7 +57,11 @@ const Auth = () => {
         <div className="absolute -top-16 -right-16 w-64 h-64 bg-blue-600 rounded-full opacity-20 pointer-events-none"></div>
         <CardHeader className="space-y-3 text-center relative z-10">
           <div className="mx-auto w-16 h-16 bg-blue-600 rounded-2xl flex items-center justify-center shadow-soft">
-            <Wallet className="w-8 h-8 text-white" />
+          <img
+              src="/justlogop.png"
+              alt="Logo NotaNusa"
+              className="w-16 h-16 rounded-l object-cover"
+            />
           </div>
           <CardTitle className="text-3xl font-bold">{isLogin ? 'Selamat Datang' : 'Daftar Akun'}</CardTitle>
           <CardDescription>
@@ -67,78 +71,97 @@ const Auth = () => {
           </CardDescription>
         </CardHeader>
         <CardContent className="relative z-10">
-          <form onSubmit={handleSubmit} className="space-y-4">
-            {!isLogin && (
-              <div className="space-y-2">
-                <Label htmlFor="fullName">Nama Lengkap</Label>
-                <Input
-                  id="fullName"
-                  type="text"
-                  placeholder="Nama Anda"
-                  value={fullName}
-                  onChange={(e) => setFullName(e.target.value)}
-                  required
-                />
-              </div>
-            )}
-            <div className="space-y-2">
-              <Label htmlFor="email">Email</Label>
-              <Input
-                id="email"
-                type="email"
-                placeholder="nama@example.com"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                required
-              />
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="password">Password</Label>
-              <Input
-                id="password"
-                type="password"
-                placeholder="••••••••"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                required
-              />
-            </div>
+  <form onSubmit={handleSubmit} className="space-y-4">
+    {!isLogin && (
+      <div className="space-y-2">
+        <Label htmlFor="fullName">Nama Lengkap</Label>
+        <Input
+          id="fullName"
+          type="text"
+          placeholder="Nama Anda"
+          value={fullName}
+          onChange={(e) => setFullName(e.target.value)}
+          required
+          className="focus-visible:ring-blue-500 focus-visible:border-blue-500"
+        />
+      </div>
+    )}
 
-            {message && <p className="text-sm text-red-600">{message}</p>}
+    <div className="space-y-2">
+      <Label htmlFor="email">Email</Label>
+      <Input
+        id="email"
+        type="email"
+        placeholder="Email Anda"
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+        required
+        className="focus-visible:ring-blue-500 focus-visible:border-blue-500"
+      />
+    </div>
 
-            <Button
-              type="submit"
-              className="w-full bg-blue-600 text-white"
-              disabled={isLoading}
-            >
-              {isLoading ? 'Memproses...' : isLogin ? 'Masuk' : 'Daftar'}
-            </Button>
-          </form>
+    <div className="space-y-2">
+      <Label htmlFor="password">Password</Label>
+      <Input
+        id="password"
+        type="password"
+        placeholder="••••••••"
+        value={password}
+        onChange={(e) => setPassword(e.target.value)}
+        required
+        className="focus-visible:ring-blue-500 focus-visible:border-blue-500"
+      />
+    </div>
 
-          <div className="mt-4 text-center text-sm">
-            {isLogin ? (
-              <>
-                Belum punya akun?{' '}
-                <button
-                  className="text-blue-600 font-medium hover:underline"
-                  onClick={() => setIsLogin(false)}
-                >
-                  Daftar sekarang
-                </button>
-              </>
-            ) : (
-              <>
-                Sudah punya akun?{' '}
-                <button
-                  className="text-blue-600 font-medium hover:underline"
-                  onClick={() => setIsLogin(true)}
-                >
-                  Masuk
-                </button>
-              </>
-            )}
-          </div>
-        </CardContent>
+    {message && <p className="text-sm text-red-700">{message}</p>}
+
+    <Button
+      type="submit"
+      className="w-full bg-blue-600 hover:!bg-blue-800 text-white"
+      disabled={isLoading}
+    >
+      {isLoading ? 'Memproses...' : isLogin ? 'Masuk' : 'Daftar'}
+    </Button>
+  </form>
+
+  <div className="mt-4 text-center text-sm space-y-3">
+    {isLogin ? (
+      <>
+        <p>
+          Belum punya akun?{' '}
+          <button
+            className="text-blue-600 font-medium hover:underline"
+            onClick={() => setIsLogin(false)}
+          >
+            Daftar sekarang
+          </button>
+        </p>
+      </>
+    ) : (
+      <>
+        <p>
+          Sudah punya akun?{' '}
+          <button
+            className="text-blue-600 font-medium hover:underline"
+            onClick={() => setIsLogin(true)}
+          >
+            Masuk
+          </button>
+        </p>
+      </>
+    )}
+
+    {/* 🔹 Tombol ke landing page */}
+    <Button
+      type="button"
+      onClick={() => (window.location.href = 'https://www.notanusa.site')}
+      className="w-full bg-transparant text-blue-700 hover:!bg-white hover:underline"
+    >
+      Kembali ke Halaman Utama
+    </Button>
+  </div>
+</CardContent>
+
       </Card>
     </div>
   );
