@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
 import { supabase } from '@/integrations/supabase/client';
 import { Button } from '@/components/ui/button';
-import { Card } from '@/components/ui/card';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { ArrowLeft, Plus, Pencil, Trash2, TrendingUp, TrendingDown } from 'lucide-react';
 import { TransactionForm } from '@/components/TransactionForm';
@@ -29,7 +29,7 @@ const Transactions = () => {
 
   useEffect(() => {
     if (!loading && !user) {
-      navigate('/login');
+      navigate('/auth');
     }
   }, [user, loading, navigate]);
 
@@ -110,90 +110,125 @@ const Transactions = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-background via-secondary/10 to-primary/5">
-      <header className="border-b bg-card/50 backdrop-blur-sm sticky top-0 z-10">
-        <div className="container mx-auto px-4 py-4 flex justify-between items-center">
-          <div className="flex items-center gap-3">
-            <Button variant="ghost" size="icon" onClick={() => navigate('/dashboard')}>
-              <ArrowLeft className="w-5 h-5" />
-            </Button>
-            <h1 className="text-2xl font-bold">Transaksi</h1>
-          </div>
-          <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-            <DialogTrigger asChild>
-              <Button className="gradient-primary text-primary-foreground" onClick={() => setEditingTransaction(null)}>
-                <Plus className="w-4 h-4 mr-2" />
-                Tambah
-              </Button>
-            </DialogTrigger>
-            <DialogContent>
-              <DialogHeader>
-                <DialogTitle>{editingTransaction ? 'Edit Transaksi' : 'Tambah Transaksi'}</DialogTitle>
-              </DialogHeader>
-              <TransactionForm 
-                transaction={editingTransaction} 
-                onSuccess={handleSuccess}
-              />
-            </DialogContent>
-          </Dialog>
-        </div>
-      </header>
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-blue-100">
+      {/* HEADER */}
+      <header className="sticky top-0 z-10 bg-white/70 backdrop-blur-md border-b border-blue-100 shadow-sm">
+  <div className="container mx-auto px-6 py-4 flex justify-between items-center">
+    <div className="flex items-center gap-3">
+      <Button
+        variant="ghost"
+        size="icon"
+        onClick={() => navigate("/dashboard")}
+        className="text-blue-900 hover:bg-blue-50"
+      >
+        <ArrowLeft className="w-5 h-5" />
+      </Button>
+      {/* Bungkus h1 dan p di sini */}
+      <div className="flex flex-col">
+        <h1 className="text-2xl font-bold text-blue-800">Manajemen Transaksi</h1>
+        <p className="text-gray-500 text-sm mt-1">
+          Kelola semua transaksi Anda di sini
+        </p>
+      </div>
+    </div>
 
-      <main className="container mx-auto px-4 py-8">
-        <div className="space-y-4">
-          {transactions.length === 0 ? (
-            <Card className="p-12 text-center">
-              <p className="text-muted-foreground">Belum ada transaksi</p>
-            </Card>
-          ) : (
-            transactions.map((transaction) => (
-              <Card key={transaction.id} className="p-4 shadow-soft hover:shadow-elevated transition-all">
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-4">
-                    <div className={`w-12 h-12 rounded-full flex items-center justify-center ${
-                      transaction.type === 'income' ? 'bg-success/10' : 'bg-destructive/10'
-                    }`}>
-                      {transaction.type === 'income' ? (
-                        <TrendingUp className="w-6 h-6 text-success" />
+    <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+      <DialogTrigger asChild>
+        <Button
+          className="bg-blue-900 hover:bg-blue-800 text-white font-semibold px-4 py-2 rounded-lg shadow-md transition-all"
+          onClick={() => setEditingTransaction(null)}
+        >
+          <Plus className="w-4 h-4 mr-2" />
+          Tambah
+        </Button>
+      </DialogTrigger>
+      <DialogContent className="max-w-lg bg-white rounded-2xl shadow-lg border border-blue-100">
+        <DialogHeader>
+          <DialogTitle className="text-blue-900 font-semibold">
+            {editingTransaction ? "Edit Transaksi" : "Tambah Transaksi"}
+          </DialogTitle>
+        </DialogHeader>
+        <TransactionForm transaction={editingTransaction} onSuccess={handleSuccess} />
+      </DialogContent>
+    </Dialog>
+  </div>
+</header>
+
+
+      {/* MAIN */}
+      <main className="container mx-auto px-6 py-10">
+        {transactions.length === 0 ? (
+          <Card className="p-14 text-center bg-white border border-blue-100 shadow-sm rounded-2xl">
+            <p className="text-blue-700/70">Belum ada transaksi tercatat.</p>
+          </Card>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {transactions.map((transaction) => (
+              <Card
+                key={transaction.id}
+                className="bg-white border border-blue-100 shadow-sm hover:shadow-md transition-all rounded-2xl overflow-hidden"
+              >
+                <CardHeader className="flex flex-row items-center justify-between pb-2">
+                  <div className="flex items-center gap-3">
+                    <div
+                      className={`w-12 h-12 rounded-full flex items-center justify-center ${
+                        transaction.type === "income"
+                          ? "bg-blue-100 text-blue-700"
+                          : "bg-red-100 text-red-600"
+                      }`}
+                    >
+                      {transaction.type === "income" ? (
+                        <TrendingUp className="w-6 h-6" />
                       ) : (
-                        <TrendingDown className="w-6 h-6 text-destructive" />
+                        <TrendingDown className="w-6 h-6" />
                       )}
                     </div>
                     <div>
-                      <p className="font-semibold">{transaction.description || 'Tanpa deskripsi'}</p>
-                      <p className="text-sm text-muted-foreground">
-                        {transaction.categories?.name || 'Tanpa kategori'} • {formatDate(transaction.date)}
+                      <CardTitle className="text-blue-900 font-semibold text-lg">
+                        {transaction.description || "Tanpa deskripsi"}
+                      </CardTitle>
+                      <p className="text-sm text-blue-700/60">
+                        {transaction.categories?.name || "Tanpa kategori"} • {formatDate(transaction.date)}
                       </p>
                     </div>
                   </div>
-                  <div className="flex items-center gap-4">
-                    <p className={`text-xl font-bold ${
-                      transaction.type === 'income' ? 'text-success' : 'text-destructive'
-                    }`}>
-                      {transaction.type === 'income' ? '+' : '-'}{formatCurrency(transaction.amount)}
-                    </p>
-                    <div className="flex gap-2">
-                      <Button
-                        variant="ghost"
-                        size="icon"
-                        onClick={() => handleEdit(transaction)}
-                      >
-                        <Pencil className="w-4 h-4" />
-                      </Button>
-                      <Button
-                        variant="ghost"
-                        size="icon"
-                        onClick={() => handleDelete(transaction.id)}
-                      >
-                        <Trash2 className="w-4 h-4" />
-                      </Button>
-                    </div>
+                  <div className="flex gap-2">
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      className="hover:bg-blue-50 text-blue-800"
+                      onClick={() => {
+                        setEditingTransaction(transaction);
+                        setIsDialogOpen(true);
+                      }}
+                    >
+                      <Pencil className="w-4 h-4" />
+                    </Button>
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      className="hover:bg-red-50 text-red-600"
+                      onClick={() => handleDelete(transaction.id)}
+                    >
+                      <Trash2 className="w-4 h-4" />
+                    </Button>
                   </div>
-                </div>
+                </CardHeader>
+
+                <CardContent className="pt-0 flex justify-between items-center">
+                  <p
+                    className={`text-lg font-bold ${
+                      transaction.type === "income" ? "text-blue-800" : "text-red-600"
+                    }`}
+                  >
+                    {transaction.type === "income" ? "+" : "-"}
+                    {formatCurrency(transaction.amount)}
+                  </p>
+                </CardContent>
               </Card>
-            ))
-          )}
-        </div>
+            ))}
+          </div>
+        )}
       </main>
     </div>
   );

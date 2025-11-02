@@ -27,7 +27,7 @@ const Categories = () => {
 
   useEffect(() => {
     if (!loading && !user) {
-      navigate('/login');
+      navigate('/auth');
     }
   }, [user, loading, navigate]);
 
@@ -95,122 +95,149 @@ const Categories = () => {
   const expenseCategories = categories.filter(c => c.type === 'expense');
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-background via-secondary/10 to-primary/5">
-      <header className="border-b bg-card/50 backdrop-blur-sm sticky top-0 z-10">
-        <div className="container mx-auto px-4 py-4 flex justify-between items-center">
-          <div className="flex items-center gap-3">
-            <Button variant="ghost" size="icon" onClick={() => navigate('/dashboard')}>
-              <ArrowLeft className="w-5 h-5" />
-            </Button>
-            <h1 className="text-2xl font-bold">Kategori</h1>
-          </div>
-          <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-            <DialogTrigger asChild>
-              <Button className="gradient-primary text-primary-foreground" onClick={() => setEditingCategory(null)}>
-                <Plus className="w-4 h-4 mr-2" />
-                Tambah
-              </Button>
-            </DialogTrigger>
-            <DialogContent>
-              <DialogHeader>
-                <DialogTitle>{editingCategory ? 'Edit Kategori' : 'Tambah Kategori'}</DialogTitle>
-              </DialogHeader>
-              <CategoryForm 
-                category={editingCategory} 
-                onSuccess={handleSuccess}
-              />
-            </DialogContent>
-          </Dialog>
-        </div>
-      </header>
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-blue-100">
+  {/* HEADER */}
+  <header className="border-b bg-white/70 backdrop-blur-sm sticky top-0 z-10 shadow-sm">
+  <div className="container mx-auto px-4 py-4 flex justify-between items-center">
+    <div className="flex items-center gap-3">
+      <Button
+        variant="ghost"
+        size="icon"
+        onClick={() => navigate('/dashboard')}
+        className="text-blue-900 hover:bg-blue-100"
+      >
+        <ArrowLeft className="w-4 h-4" />
+      </Button>
 
-      <main className="container mx-auto px-4 py-8">
-        <Tabs defaultValue="income" className="w-full">
-          <TabsList className="grid w-full grid-cols-2 mb-6">
-            <TabsTrigger value="income">Pemasukan</TabsTrigger>
-            <TabsTrigger value="expense">Pengeluaran</TabsTrigger>
-          </TabsList>
-          
-          <TabsContent value="income" className="space-y-4">
-            {incomeCategories.length === 0 ? (
-              <Card className="p-12 text-center">
-                <p className="text-muted-foreground">Belum ada kategori pemasukan</p>
-              </Card>
-            ) : (
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                {incomeCategories.map((category) => (
-                  <Card key={category.id} className="p-4 shadow-soft hover:shadow-elevated transition-all">
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 rounded-full bg-success/10 flex items-center justify-center">
-                          <Tag className="w-5 h-5 text-success" />
-                        </div>
-                        <p className="font-semibold">{category.name}</p>
-                      </div>
-                      <div className="flex gap-2">
-                        <Button
-                          variant="ghost"
-                          size="icon"
-                          onClick={() => handleEdit(category)}
-                        >
-                          <Pencil className="w-4 h-4" />
-                        </Button>
-                        <Button
-                          variant="ghost"
-                          size="icon"
-                          onClick={() => handleDelete(category.id)}
-                        >
-                          <Trash2 className="w-4 h-4" />
-                        </Button>
-                      </div>
-                    </div>
-                  </Card>
-                ))}
-              </div>
-            )}
-          </TabsContent>
-
-          <TabsContent value="expense" className="space-y-4">
-            {expenseCategories.length === 0 ? (
-              <Card className="p-12 text-center">
-                <p className="text-muted-foreground">Belum ada kategori pengeluaran</p>
-              </Card>
-            ) : (
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                {expenseCategories.map((category) => (
-                  <Card key={category.id} className="p-4 shadow-soft hover:shadow-elevated transition-all">
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 rounded-full bg-destructive/10 flex items-center justify-center">
-                          <Tag className="w-5 h-5 text-destructive" />
-                        </div>
-                        <p className="font-semibold">{category.name}</p>
-                      </div>
-                      <div className="flex gap-2">
-                        <Button
-                          variant="ghost"
-                          size="icon"
-                          onClick={() => handleEdit(category)}
-                        >
-                          <Pencil className="w-4 h-4" />
-                        </Button>
-                        <Button
-                          variant="ghost"
-                          size="icon"
-                          onClick={() => handleDelete(category.id)}
-                        >
-                          <Trash2 className="w-4 h-4" />
-                        </Button>
-                      </div>
-                    </div>
-                  </Card>
-                ))}
-              </div>
-            )}
-          </TabsContent>
-        </Tabs>
-      </main>
+      {/* Bungkus h1 dan p di sini */}
+      <div className="flex flex-col">
+        <h1 className="text-2xl md:text-3xl font-bold text-blue-800">Kategori</h1>
+        <p className="text-gray-500 text-sm mt-1">
+          Kelola kategori transaksi Anda di sini
+        </p>
+      </div>
     </div>
+
+    <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+      <DialogTrigger asChild>
+        <Button
+          className="bg-blue-900 text-white hover:bg-blue-800 shadow-md"
+          onClick={() => setEditingCategory(null)}
+        >
+          <Plus className="w-4 h-4 mr-2" />
+          Tambah
+        </Button>
+      </DialogTrigger>
+
+      <DialogContent>
+        <DialogHeader>
+          <DialogTitle className="text-blue-900">
+            {editingCategory ? "Edit Kategori" : "Tambah Kategori"}
+          </DialogTitle>
+        </DialogHeader>
+
+        <CategoryForm category={editingCategory} onSuccess={handleSuccess} />
+      </DialogContent>
+    </Dialog>
+  </div>
+</header>
+
+
+  {/* MAIN */}
+  <main className="container mx-auto px-4 py-8">
+    <Tabs defaultValue="income" className="w-full">
+
+      {/* TAB BUTTONS */}
+      <TabsList className="grid w-full grid-cols-2 mb-6 bg-blue-100 text-blue-900 rounded-lg shadow-sm">
+        <TabsTrigger 
+          value="income"
+          className="data-[state=active]:bg-blue-900 data-[state=active]:text-white rounded-md"
+        >
+          Pemasukan
+        </TabsTrigger>
+        <TabsTrigger 
+          value="expense"
+          className="data-[state=active]:bg-blue-900 data-[state=active]:text-white rounded-md"
+        >
+          Pengeluaran
+        </TabsTrigger>
+      </TabsList>
+
+      {/* INCOME TAB */}
+      <TabsContent value="income" className="space-y-4">
+        {incomeCategories.length === 0 ? (
+          <Card className="p-12 text-center bg-white shadow-sm border border-blue-100">
+            <p className="text-blue-700/70">Belum ada kategori pemasukan</p>
+          </Card>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            {incomeCategories.map((category) => (
+              <Card
+                key={category.id}
+                className="p-4 bg-white border border-blue-100 shadow-sm hover:shadow-md transition rounded-xl"
+              >
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 rounded-full bg-green-100 flex items-center justify-center">
+                      <Tag className="w-5 h-5 text-green-700" />
+                    </div>
+                    <p className="font-semibold text-blue-900">{category.name}</p>
+                  </div>
+
+                  <div className="flex gap-2">
+                    <Button variant="ghost" size="icon" onClick={() => handleEdit(category)}>
+                      <Pencil className="w-4 h-4 text-blue-800" />
+                    </Button>
+                    <Button variant="ghost" size="icon" onClick={() => handleDelete(category.id)}>
+                      <Trash2 className="w-4 h-4 text-red-600" />
+                    </Button>
+                  </div>
+                </div>
+              </Card>
+            ))}
+          </div>
+        )}
+      </TabsContent>
+
+      {/* EXPENSE TAB */}
+      <TabsContent value="expense" className="space-y-4">
+        {expenseCategories.length === 0 ? (
+          <Card className="p-12 text-center bg-white shadow-sm border border-blue-100">
+            <p className="text-blue-700/70">Belum ada kategori pengeluaran</p>
+          </Card>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            {expenseCategories.map((category) => (
+              <Card
+                key={category.id}
+                className="p-4 bg-white border border-blue-100 shadow-sm hover:shadow-md transition rounded-xl"
+              >
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 rounded-full bg-red-100 flex items-center justify-center">
+                      <Tag className="w-5 h-5 text-red-700" />
+                    </div>
+                    <p className="font-semibold text-blue-900">{category.name}</p>
+                  </div>
+
+                  <div className="flex gap-2">
+                    <Button variant="ghost" size="icon" onClick={() => handleEdit(category)}>
+                      <Pencil className="w-4 h-4 text-blue-800" />
+                    </Button>
+                    <Button variant="ghost" size="icon" onClick={() => handleDelete(category.id)}>
+                      <Trash2 className="w-4 h-4 text-red-600" />
+                    </Button>
+                  </div>
+                </div>
+              </Card>
+            ))}
+          </div>
+        )}
+      </TabsContent>
+
+    </Tabs>
+  </main>
+</div>
   );
 };
 

@@ -28,7 +28,7 @@ const Register = () => {
     const { error } = await signUp(email, password, fullName);
     
     if (!error) {
-      navigate('/login');
+      navigate('/auth');
     }
     
     setIsLoading(false);
@@ -89,7 +89,7 @@ const Register = () => {
           </form>
           <div className="mt-6 text-center text-sm">
             <span className="text-muted-foreground">Sudah punya akun? </span>
-            <Link to="/login" className="text-primary hover:underline font-medium">
+            <Link to="/auth" className="text-primary hover:underline font-medium">
               Masuk di sini
             </Link>
           </div>
