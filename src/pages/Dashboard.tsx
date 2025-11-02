@@ -234,11 +234,13 @@ const Dashboard = () => {
       <header className="border-b bg-card/50 backdrop-blur-sm sticky top-0 z-10 shadow-sm">
         <div className="container mx-auto px-4 py-3 flex justify-between items-center">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 bg-gradient-primary rounded-xl flex items-center justify-center shadow-soft">
-              <Wallet className="w-6 h-6 text-primary-foreground" />
-            </div>
+          <img
+              src="/logo.png"
+              alt="Logo NotaNusa"
+              className="w-12 h-12 rounded-xl object-cover"
+            />
             <div>
-              <h1 className="text-xl md:text-2xl font-bold">BudgetForge</h1>
+              <h1 className="text-xl md:text-2xl font-bold">NotaNusa</h1>
               <p className="text-xs text-muted-foreground hidden sm:block">Kelola Keuangan Anda</p>
             </div>
           </div>
@@ -262,7 +264,7 @@ const Dashboard = () => {
                     <Wallet className="w-6 h-6 text-primary-foreground" />
                   </div>
                   <div>
-                    <h2 className="font-bold">BudgetForge</h2>
+                    <h2 className="font-bold">NotaNusa</h2>
                     <p className="text-xs text-muted-foreground">Menu</p>
                   </div>
                 </div>

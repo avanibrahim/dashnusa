@@ -37,11 +37,11 @@ const Login = () => {
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-background via-secondary/20 to-primary/10 p-4">
       <Card className="w-full max-w-md shadow-elevated">
         <CardHeader className="space-y-3 text-center">
-          <div className="mx-auto w-16 h-16 bg-gradient-primary rounded-2xl flex items-center justify-center shadow-soft">
+          <div className="mx-auto w-16 h-16 bg-blue-500 rounded-2xl flex items-center justify-center shadow-soft">
             <Wallet className="w-8 h-8 text-primary-foreground" />
           </div>
           <CardTitle className="text-3xl font-bold">Selamat Datang</CardTitle>
-          <CardDescription>Masuk ke akun BudgetForge Anda</CardDescription>
+          <CardDescription>Masuk ke akun NotaNusa Anda</CardDescription>
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit} className="space-y-4">
@@ -69,7 +69,7 @@ const Login = () => {
             </div>
             <Button 
               type="submit" 
-              className="w-full gradient-primary text-primary-foreground"
+              className="w-full bg-blue-500 text-primary-foreground"
               disabled={isLoading}
             >
               {isLoading ? 'Memproses...' : 'Masuk'}

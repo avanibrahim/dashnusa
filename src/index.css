@@ -41,7 +41,7 @@
     
     --radius: 0.5rem;
     
-    --gradient-primary: linear-gradient(135deg, hsl(178 65% 48%), hsl(187 75% 60%));
+    --gradient-primary: linear-gradient(135deg, hsl(217 91% 60%) 0%, hsl(210 100% 70%) 100%);
     --gradient-card: linear-gradient(180deg, hsl(0 0% 100%), hsl(220 20% 99%));
     --shadow-soft: 0 2px 15px -3px hsl(220 15% 15% / 0.08);
     --shadow-elevated: 0 10px 30px -10px hsl(220 15% 15% / 0.12);
@@ -90,7 +90,7 @@
     --input: 220 15% 20%;
     --ring: 178 65% 48%;
     
-    --gradient-primary: linear-gradient(135deg, hsl(178 65% 48%), hsl(187 75% 55%));
+    --gradient-primary: linear-gradient(135deg, hsl(217 91% 60%) 0%, hsl(210 100% 70%) 100%);
     --gradient-card: linear-gradient(180deg, hsl(220 18% 14%), hsl(220 18% 16%));
     --shadow-soft: 0 2px 15px -3px hsl(0 0% 0% / 0.3);
     --shadow-elevated: 0 10px 30px -10px hsl(0 0% 0% / 0.5);
